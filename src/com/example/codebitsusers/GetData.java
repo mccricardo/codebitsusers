@@ -25,8 +25,8 @@ public class GetData {
 	    + user + "&password=" + password + "&token=";
 
     private String tokenUrl = "https://services.sapo.pt/Codebits/gettoken?user="
-	    + user + "&password=" + password;
-
+	    + user + "&password=" + password;     
+    
     private String gravatarUrl = "http://www.gravatar.com/avatar/"; 
 	    
     private HttpResponse response;                            
@@ -106,5 +106,5 @@ public class GetData {
 	    	}
 	}
 	return cache.get(userUrl);
-    }
+    }         
 }

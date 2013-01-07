@@ -1,17 +1,26 @@
 package com.example.codebitsusers;
 
+import java.lang.ref.WeakReference;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.Adapter;
+import android.widget.ImageView;
 
-public class UsersDataSource {
+public class UsersDataSource {        
     private static Context context;
 
     private static UsersDataSource instance;
@@ -20,7 +29,7 @@ public class UsersDataSource {
 
     private UsersSQLiteHelper dbHelper;
 
-    private GetData getData;
+    private GetData getData;        
 
     private String[] result_columns = { UsersSQLiteHelper.COLUMN_ID,
 	    UsersSQLiteHelper.COLUMN_TWITTER, UsersSQLiteHelper.COLUMN_BLOG,
@@ -36,7 +45,80 @@ public class UsersDataSource {
     private String having = null;
 
     private String order = null;
+    
+    private SyncData usersOperation;
+    
+    private SetUserPic picsOperation;
+    
+    public static final int GET_NEW_DATA = 1;
+    
+    public static final int GET_EXISTING_DATA = 2;
+    
+    private class SyncData extends AsyncTask<Void, Void, Void> {
+	private View view;				
+	
+	private SimpleCursorAdapter usersAdapter;
+	
+	JSONArray newData;
+	
+	public SyncData(View _view, Activity _activity, Adapter adapter) {
+	    super();
+	    view = _view;
+	    usersAdapter = (SimpleCursorAdapter) adapter;	    
+	}
+	
+	@Override
+	protected void onPreExecute() {
+	    view.setVisibility(View.VISIBLE);
+	    view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.rotate));
+	}
+			
+	@Override
+	protected Void doInBackground(Void... arg0) {
+	    newData = getData.syncData();
+	    updateDatabase(newData);
+	    return null;
+	}
+	
+	@Override
+	protected void onPostExecute(Void params) {	 	    	    	    	    	    	 
+	    usersAdapter.swapCursor(getCursor()); 
+	    usersAdapter.notifyDataSetChanged();
+	    	 
+	    view.clearAnimation();
+	    view.setVisibility(View.INVISIBLE);
+	}
+    }
+    
+    
+    private class SetUserPic extends AsyncTask<String, Void, Drawable> {	
+	private final WeakReference<ImageView> imageViewReference;	
+	
+	private String url;
+	
+	public SetUserPic(ImageView _view, String _url) {
+	    super();
+	    imageViewReference = new WeakReference<ImageView>(_view);
+	    url = _url;
+	}				
 
+	@Override
+	protected Drawable doInBackground(String... params) {
+	    return getPicture(url);	    
+	}      
+	
+	@Override
+	protected void onPostExecute(Drawable pic) {
+	    if (imageViewReference != null) {
+		ImageView imageView = imageViewReference.get();
+	        if (imageView != null) {	            
+	            imageView.setImageDrawable(pic);	            
+	        }
+	    }	    
+	}			
+    }
+
+    
     private UsersDataSource() {
 	dbHelper = new UsersSQLiteHelper(context);
 	open();	
@@ -65,22 +147,12 @@ public class UsersDataSource {
     public void close() {
 	dbHelper.close();
     }
-    
-    public void updateData() {
-	getData = new GetData();	
-	JSONArray newData = getData.syncData();
-	updateDatabase(newData);
-    }
-    
-    public Drawable getPicture(String md5) {
-	getData = new GetData();	
-	Drawable userPic = getData.getAvatar(md5);
+                    
+    public void updateData(View view, Activity activity, Adapter usersAdapter) {
+	getData = new GetData();
 	
-	if (userPic == null) {
-	    userPic = context.getResources().getDrawable(R.drawable.avatar_default);
-	}
-	
-	return userPic;
+	usersOperation = new SyncData(view, activity, usersAdapter);
+	usersOperation.execute();	
     }
     
     private void updateDatabase(JSONArray usersData) {			
@@ -99,9 +171,8 @@ public class UsersDataSource {
 		    values.put(UsersSQLiteHelper.COLUMN_NICK, obj.getString("nick"));
 		    values.put(UsersSQLiteHelper.COLUMN_NAME, obj.getString("name"));
 		    values.put(UsersSQLiteHelper.COLUMN_MD5, obj.getString("md5mail"));
-		
-		    update(values);
-		
+		    
+		    update(values);		    		    		    
 		} catch (JSONException e) {
 		 e.printStackTrace();
 		}
@@ -115,29 +186,39 @@ public class UsersDataSource {
     public void update(ContentValues values) {
 	database.replace(UsersSQLiteHelper.USERS_TABLE, null, values);
     }
-
-    public void printUsers() {	
-	Cursor cursor = database.query(UsersSQLiteHelper.USERS_TABLE,
-		result_columns, where, whereArgs, groupBy, having, order);
-
-	cursor.moveToFirst();
-	while (cursor.moveToNext()) {
-	    System.out.println(
-		    "ID: " + cursor.getInt(0) + 
-		    " TWITTER: " + cursor.getString(1) + 
-		    " BLOG: " + cursor.getString(2) + 
-		    " NICK: " + cursor.getString(3) + 
-		    " NAME: " + cursor.getString (4));
-	}
-
-	cursor.close();
+        
+    public void getUsersCursor(int type, View spinner, Activity activity, UsersAdapter usersAdapter) {	
+	if (type == GET_NEW_DATA) {	    	    
+	    updateData(spinner, activity, usersAdapter);
+	} else {
+	    usersAdapter.swapCursor(getCursor()); 
+	    usersAdapter.notifyDataSetChanged();
+	    	 
+	    spinner.clearAnimation();
+	    spinner.setVisibility(View.INVISIBLE);    
+	}	
     }
     
-    public Cursor getUsersCursor() {
+    public Cursor getCursor() {
 	Cursor cursor = database.query(UsersSQLiteHelper.USERS_TABLE,
 		result_columns, where, whereArgs, groupBy, having, order);
-
 	return cursor;
+    }
+                    
+    public void setPicture(String md5, ImageView image) {
+	picsOperation = new SetUserPic(image, md5);
+	picsOperation.execute();	
+    }
+    
+    private Drawable getPicture(String md5) {
+	getData = new GetData();	
+	Drawable userPic = getData.getAvatar(md5);
+	
+	if (userPic == null) {
+	    userPic = context.getResources().getDrawable(R.drawable.avatar_default);
+	}
+	
+	return userPic;
     }
     
     public String[] getUserInfo(int userId) {
@@ -154,5 +235,22 @@ public class UsersDataSource {
 			!cursor.getString(2).isEmpty() ? cursor.getString(2) : "No info", 
 			!cursor.getString(3).isEmpty() ? cursor.getString(3) : "No info"};
 	return res;
+    }
+    
+    public void printUsers() {	
+	Cursor cursor = database.query(UsersSQLiteHelper.USERS_TABLE,
+		result_columns, where, whereArgs, groupBy, having, order);
+
+	cursor.moveToFirst();
+	while (cursor.moveToNext()) {
+	    System.out.println(
+		    "ID: " + cursor.getInt(0) + 
+		    " TWITTER: " + cursor.getString(1) + 
+		    " BLOG: " + cursor.getString(2) + 
+		    " NICK: " + cursor.getString(3) + 
+		    " NAME: " + cursor.getString (4));
+	}
+
+	cursor.close();
     }
 }
