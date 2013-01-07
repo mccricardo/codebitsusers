@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"    
     android:orientation="horizontal"
     android:padding="5dip" >
- 
-    <!--  ListRow Left sied Thumbnail image -->
+  
     <LinearLayout android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,33 +16,31 @@
             android:id="@+id/list_image"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            />
+            android:contentDescription="Avatar" />
  
     </LinearLayout>
- 
-    <!-- Title Of Song-->
+     
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Rihanna Love the way lie"
+        android:text=""
         android:textColor="#040404"
         android:typeface="sans"
-        android:textSize="15dip"
+        android:textSize="15sp"
         android:textStyle="bold"/>
- 
-    <!-- Artist Name -->
+  
     <TextView
         android:id="@+id/twitter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
         android:textColor="#343434"
-        android:textSize="10dip"
+        android:textSize="10sp"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Just gona stand there and ..." />       
+        android:text="" />       
  
 </RelativeLayout>

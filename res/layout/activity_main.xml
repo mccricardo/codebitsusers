@@ -12,7 +12,8 @@
 <ImageView android:id="@+id/spinner"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"                                                          
-           android:src="@drawable/spinning_32px" />
+           android:src="@drawable/spinning_32px" 
+           android:layout_alignParentRight="true"/>
 
 
 </RelativeLayout>

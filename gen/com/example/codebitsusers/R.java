@@ -19,14 +19,14 @@ public final class R {
         public static final int spinning_32px=0x7f020002;
     }
     public static final class id {
-        public static final int blog=0x7f080004;
+        public static final int blog=0x7f080003;
         public static final int list_image=0x7f080006;
         public static final int menu_settings=0x7f080007;
         public static final int name=0x7f080001;
-        public static final int nick=0x7f080005;
+        public static final int nick=0x7f080004;
         public static final int spinner=0x7f080000;
-        public static final int thumbnail=0x7f080002;
-        public static final int twitter=0x7f080003;
+        public static final int thumbnail=0x7f080005;
+        public static final int twitter=0x7f080002;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
