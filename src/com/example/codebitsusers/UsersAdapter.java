@@ -39,7 +39,7 @@ public class UsersAdapter extends SimpleCursorAdapter {
         ImageView image = (ImageView) convertView.findViewById(R.id.list_image);        
         
         name.setText(c.getString(4));
-        twitter.setText(c.getString(1));
+        twitter.setText(!c.getString(1).isEmpty() ? "@" + c.getString(1) : "No info");
         data.setPicture(c.getString(5), image);               			
 	
         return row;
