@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -61,10 +62,13 @@ public class UsersDataSource {
 	
 	JSONArray newData;
 	
+	private ListActivity activity;
+	
 	public SyncData(View _view, Activity _activity, Adapter adapter) {
 	    super();
 	    view = _view;
-	    usersAdapter = (SimpleCursorAdapter) adapter;	    
+	    usersAdapter = (SimpleCursorAdapter) adapter;
+	    activity = (ListActivity) _activity;
 	}
 	
 	@Override
@@ -81,12 +85,18 @@ public class UsersDataSource {
 	}
 	
 	@Override
-	protected void onPostExecute(Void params) {	 	    	    	    	    	    	 
-	    usersAdapter.swapCursor(getCursor()); 
-	    usersAdapter.notifyDataSetChanged();
+	protected void onPostExecute(Void params) {
+	    String[] fromColumns = {UsersSQLiteHelper.COLUMN_NAME, UsersSQLiteHelper.COLUMN_TWITTER};
+	    usersAdapter = new UsersAdapter(activity, 
+				android.R.layout.simple_list_item_1, 
+				getCursor(),
+				fromColumns, 
+				null);
 	    	 
 	    view.clearAnimation();
 	    view.setVisibility(View.INVISIBLE);
+	    
+	    activity.setListAdapter(usersAdapter);
 	}
     }
     
@@ -191,9 +201,15 @@ public class UsersDataSource {
 	if (type == GET_NEW_DATA) {	    	    
 	    updateData(spinner, activity, usersAdapter);
 	} else {
-	    usersAdapter.swapCursor(getCursor()); 
-	    usersAdapter.notifyDataSetChanged();
-	    	 
+	    String[] fromColumns = {UsersSQLiteHelper.COLUMN_NAME, UsersSQLiteHelper.COLUMN_TWITTER};
+	    usersAdapter = new UsersAdapter(activity, 
+				android.R.layout.simple_list_item_1, 
+				getCursor(),
+				fromColumns, 
+				null);
+	    
+	    ((ListActivity)activity).setListAdapter(usersAdapter);
+	    
 	    spinner.clearAnimation();
 	    spinner.setVisibility(View.INVISIBLE);    
 	}	
@@ -202,6 +218,8 @@ public class UsersDataSource {
     public Cursor getCursor() {
 	Cursor cursor = database.query(UsersSQLiteHelper.USERS_TABLE,
 		result_columns, where, whereArgs, groupBy, having, order);
+	
+	//cursor.moveToFirst();
 	return cursor;
     }
                     

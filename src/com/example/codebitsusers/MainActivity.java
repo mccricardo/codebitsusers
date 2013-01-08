@@ -24,18 +24,12 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.activity_main);		
+	setContentView(R.layout.activity_main);				
 	
 	data.setContext(this);
 	data = data.getInstance();
 	
-	String[] fromColumns = {UsersSQLiteHelper.COLUMN_NAME, UsersSQLiteHelper.COLUMN_TWITTER};
-	mAdapter = new UsersAdapter(MainActivity.this, 
-			android.R.layout.simple_list_item_1, 
-			data.getCursor(),
-			fromColumns, 
-			null);
-	setListAdapter(mAdapter);
+	mAdapter = null;
 	
 	spinner = (ImageView) findViewById(R.id.spinner);	
 	if(isNetworkAvailable()) {	    

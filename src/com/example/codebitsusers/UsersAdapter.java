@@ -1,5 +1,7 @@
 package com.example.codebitsusers;
 
+import org.json.JSONException;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -27,11 +29,12 @@ public class UsersAdapter extends SimpleCursorAdapter {
     }
     
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {	
 	if(convertView == null)
             convertView = View.inflate(context, R.layout.list_row, null);
         View row = convertView;        
-                        
+        System.out.println(c.getCount());
+        System.out.println(c.getColumnCount());
         c.moveToPosition(position);
 
         TextView name = (TextView) convertView.findViewById(R.id.name);
@@ -41,7 +44,7 @@ public class UsersAdapter extends SimpleCursorAdapter {
         name.setText(c.getString(4));
         twitter.setText(!c.getString(1).isEmpty() ? "@" + c.getString(1) : "No info");
         data.setPicture(c.getString(5), image);               			
-	
+        
         return row;
     }                  
 }
