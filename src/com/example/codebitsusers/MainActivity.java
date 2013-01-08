@@ -20,17 +20,7 @@ public class MainActivity extends ListActivity {
     
     private ImageView spinner;    
     
-    private UsersDataSource data;         
-    
-    private UserObserver userObserver;
-    
-    private class UserObserver extends DataSetObserver {
-	@Override
-	public void onChanged() {
-	    super.onChanged();	    
-	    mAdapter.notifyDataSetChanged();
-	}		
-    }
+    private UsersDataSource data;                 
                      
     @Override
     protected void onCreate(Bundle savedInstanceState) {
