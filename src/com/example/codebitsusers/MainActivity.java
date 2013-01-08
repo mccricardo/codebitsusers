@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,7 +20,17 @@ public class MainActivity extends ListActivity {
     
     private ImageView spinner;    
     
-    private UsersDataSource data;               
+    private UsersDataSource data;         
+    
+    private UserObserver userObserver;
+    
+    private class UserObserver extends DataSetObserver {
+	@Override
+	public void onChanged() {
+	    super.onChanged();	    
+	    mAdapter.notifyDataSetChanged();
+	}		
+    }
                      
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +41,6 @@ public class MainActivity extends ListActivity {
 	data = data.getInstance();
 	
 	mAdapter = null;
-	
 	spinner = (ImageView) findViewById(R.id.spinner);	
 	if(isNetworkAvailable()) {	    
 	    data.getUsersCursor(UsersDataSource.GET_NEW_DATA, spinner, MainActivity.this, mAdapter);	    

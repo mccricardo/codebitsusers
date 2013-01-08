@@ -91,12 +91,12 @@ public class UsersDataSource {
 				android.R.layout.simple_list_item_1, 
 				getCursor(),
 				fromColumns, 
-				null);
-	    	 
-	    view.clearAnimation();
-	    view.setVisibility(View.INVISIBLE);
+				null);		    
 	    
 	    activity.setListAdapter(usersAdapter);
+	    
+	    view.clearAnimation();
+	    view.setVisibility(View.INVISIBLE);	    	    
 	}
     }
     
@@ -215,11 +215,10 @@ public class UsersDataSource {
 	}	
     }
     
-    public Cursor getCursor() {
+    public Cursor getCursor() {	
 	Cursor cursor = database.query(UsersSQLiteHelper.USERS_TABLE,
 		result_columns, where, whereArgs, groupBy, having, order);
 	
-	//cursor.moveToFirst();
 	return cursor;
     }
                     
