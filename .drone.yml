@@ -1,6 +1,7 @@
 pipeline:
   build:
     image: ubuntu:14.04
+    insecure: true
     commands:
       - echo "NABO"
   
