@@ -1,6 +1,6 @@
-build:
-  image: ubuntu:14.04
-  commands:
-    - echo "NABO"
-  
+pipeline:
+  build:
+    image: ubuntu:14.04
+    commands:
+      - echo ${CI}  
 
