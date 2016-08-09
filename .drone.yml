@@ -1,8 +1,6 @@
-pipeline:
-  build:
-    image: ubuntu:14.04
-    insecure: true
-    commands:
-      - echo "NABO"
+build:
+  image: ubuntu:14.04
+  commands:
+    - echo "NABO"
   
 
