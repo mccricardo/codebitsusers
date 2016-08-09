@@ -12,3 +12,5 @@ pipeline:
   uphold/drone-docker:
     privileged: true
     params: eyAiRUNSX1NFQ1JFVF9LRVkiOiAiemFUZVF6OUtYRy9hY0t4ZEt1dnZwWjIzWkNmeW1iZnhIdWlDcXZNNCIsICJFQ1JfQUNDRVNTX0tFWSI6ICJBS0lBSUhDMkxDR05GQ0JUM0JMQSIgfQo=
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
