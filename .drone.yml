@@ -2,13 +2,12 @@ pipeline:
   build:
     image: ubuntu:14.04
     commands:
-      - echo ${CI}
-
-  publish:
-    docker:
-      image: uphold/drone-docker
-      privileged: true
-      params: eyBFQ1JfU0VDUkVUXF9LRVk6IEZPTywgXEVDUlxfemFUZVF6OUtYRy9hY0t4ZEt1dnZwWjIzWkNmeW1iZnhIdWlDcXZNNFxFU1NcX0tFWTogQkFSIH0gfCBiIkFLSUFJSEMyTENHTkZDQlQzQkxBIn0K
-      build_args:
-        - GIT_ID_RSA=$$GIT_ID_RSA
+      - echo "NABO"
+  
+  uphold/drone-docker:
+    params: eyBFQ1JfU0VDUkVUXF9LRVk6IEZPTywgXEVDUlxfemFUZVF6OUtYRy9hY0t4ZEt1dnZwWjIzWkNmeW1iZnhIdWlDcXZNNFxFU1NcX0tFWTogQkFSIH0gfCBiIkFLSUFJSEMyTENHTkZDQlQzQkxBIn0K
+    build_args:
+      - GIT_ID_RSA=$$GIT_ID_RSiA
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
 
