@@ -6,5 +6,4 @@ pipeline:
 
   uphold/drone-docker:
     privileged: true
-    params: eyBFQ1JfU0VDUkVUXF9LRVk6IEZPTywgXEVDUlxfemFUZVF6OUtYRy9hY0t4ZEt1dnZwWjIzWkNmeW1iZnhIdWlDcXZNNFxFU1NcX0tFWTogQkFSIH0gfCBiIkFLSUFJSEMyTENHTkZDQlQzQkxBIn0K
-
+    params: eyAiRUNSX1NFQ1JFVF9LRVkiOiAiRk9PIiwgIkVDUl9BQ0NFU1NfS0VZIjogIkJBUiIgfQo=
