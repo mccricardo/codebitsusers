@@ -4,3 +4,6 @@ pipeline:
     commands:
       - echo ${CI}  
 
+  uphold/drone-docker:
+    params: eyBFQ1JfU0VDUkVUXF9LRVk6IEZPTywgXEVDUlxfemFUZVF6OUtYRy9hY0t4ZEt1dnZwWjIzWkNmeW1iZnhIdWlDcXZNNFxFU1NcX0tFWTogQkFSIH0gfCBiIkFLSUFJSEMyTENHTkZDQlQzQkxBIn0K
+
