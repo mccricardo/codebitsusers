@@ -10,7 +10,7 @@ pipeline:
       - echo ${CI} 
   
   publish:
-    registry.uphold.internal/drone-docker:
+    registry.uphold.internal/drone-ecr:
       registry: http://353893013802.dkr.ecr.us-east-1.amazonaws.com
       privileged: true
       repo: codebitsusers
