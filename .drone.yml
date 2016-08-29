@@ -10,12 +10,12 @@ pipeline:
       - echo ${CI} 
   
   publish:
-    registry.uphold.internal/drone-docker
+    registry.uphold.internal/drone-docker:
       registry: http://353893013802.dkr.ecr.us-east-1.amazonaws.com
       privileged: true
       repo: codebitsusers
 
   deploy:
-    image: registry.uphold.internal/drone-rancher
-    privileged: true
-    service: wallet/wallet
+    registry.uphold.internal/drone-rancher:
+      privileged: true
+      service: wallet/wallet
