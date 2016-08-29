@@ -7,12 +7,15 @@ pipeline:
   build:
     image: ubuntu:14.04
     commands:
-      - echo ${CI}  
+      - echo ${CI} 
+  
+  publish:
+    registry.uphold.internal/drone-docker
+      registry: http://353893013802.dkr.ecr.us-east-1.amazonaws.com
+      privileged: true
+      repo: codebitsusers
 
-  uphold/drone-docker:
-    registry: http://353893013802.dkr.ecr.us-east-1.amazonaws.com
+  deploy:
+    image: registry.uphold.internal/drone-rancher
     privileged: true
-    repo: codebitsusers
-    params: eyAiRUNSX1NFQ1JFVF9LRVkiOiAiemFUZVF6OUtYRy9hY0t4ZEt1dnZwWjIzWkNmeW1iZnhIdWlDcXZNNCIsICJFQ1JfQUNDRVNTX0tFWSI6ICJBS0lBSUhDMkxDR05GQ0JUM0JMQSIgfQo=
-    environment:
-      - DOCKER_LAUNCH_DEBUG=true
+    service: wallet/wallet
