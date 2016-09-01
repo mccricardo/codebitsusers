@@ -12,7 +12,6 @@ pipeline:
   deploy:
       image: private.registry:5000/drone-rancher:0.5-rc1
       privileged: true
-      service: wallet/wallet
       rancher_services:
         - redis/redis
         - redis2/redis
