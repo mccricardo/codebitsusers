@@ -18,8 +18,5 @@ pipeline:
       image: private.registry:5000/drone-rancher:0.5-rc1
       privileged: true
       service: wallet/wallet
-      rancher_services:
-	- sercice1
-	- service2
-	- service3
+      rancher_services: service1,service2,service3
       
