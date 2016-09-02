@@ -1,17 +1,18 @@
-cache:
-  mount:
-    - .git
-    - /drone/docker
-
 pipeline:
+   # restore the cache from an sftp server
+  sftp_cache:
+    server: sfpt-server
+    restore: true
+    mount: [ node_modules ]
+
   build:
     image: ubuntu:14.04
     commands:
       - echo ${CI}
+      - cat node_modules/test.txt
+      - cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > node_modules/test.txt
 
-  deploy:
-      image: private.registry:5000/drone-rancher:0.5-rc1
-      privileged: true
-      services:
-        - redis/redis
-        - redis2/redis
+  sftp_cache:
+    server: sfpt-server
+    restore: true
+    mount: [ node_modules ]
