@@ -9,7 +9,7 @@ pipeline:
     username: myuser
     password: mypassword
     restore: true
-    mount: /done/node_modules
+    mount: [ node_modules, .git ]
 
   build:
     image: ubuntu:14.04
@@ -19,12 +19,10 @@ pipeline:
       - mkdir -p node_modules
       - cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > node_modules/test.txt
       - cat node_modules/test.txt
-      - ls /drone
-      - cat /drone/node_modules/test.txt
 
   sftp_cache:
     server: 172.17.0.15:22
     username: myuser
     password: mypassword
     rebuild: true
-    mount: /drone/node_modules
+    mount: [ node_modules, .git ]
