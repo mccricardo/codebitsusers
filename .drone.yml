@@ -5,7 +5,7 @@ workspace:
 pipeline:
    # restore the cache from an sftp server
   sftp_cache:
-    server: 172.17.0.15:22
+    server: sftp.internal:2224
     username: myuser
     password: mypassword
     restore: true
@@ -21,7 +21,7 @@ pipeline:
       - cat node_modules/test.txt
 
   sftp_cache:
-    server: 172.17.0.15:22
+    server: sftp.internal:2224
     username: myuser
     password: mypassword
     rebuild: true
