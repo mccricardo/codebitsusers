@@ -3,7 +3,7 @@ pipeline:
   sftp_cache:
     server: 172.17.0.15:22
     user: myuser
-    password: mypasword
+    password: mypassword
     restore: true
     mount: [ node_modules ]
 
@@ -17,6 +17,6 @@ pipeline:
   sftp_cache:
     server: 172.17.0.15:22
     user: myuser
-    password: mypasword
+    password: mypassword
     restore: true
     mount: [ node_modules ]
