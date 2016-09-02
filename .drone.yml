@@ -1,3 +1,7 @@
+workspace:
+  path: /drone/src/github.com/mccricardo/codebitsusers
+  base: /drone
+
 pipeline:
    # restore the cache from an sftp server
   sftp_cache:
@@ -11,13 +15,10 @@ pipeline:
     image: ubuntu:14.04
     commands:
       - echo ${CI}
-      - cp -a /drone/node_modules . || echo "Cache does not exist"
-      - rm -rf /drone/node_modules
       - cat node_modules/test.txt || echo "Does not exist"
       - mkdir -p node_modules
       - cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > node_modules/test.txt
       - cat node_modules/test.txt
-      - cp -a node_modules /drone
       - ls /drone
       - cat /drone/node_modules/test.txt
 
