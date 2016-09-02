@@ -2,7 +2,7 @@ pipeline:
    # restore the cache from an sftp server
   sftp_cache:
     server: 172.17.0.15:22
-    user: myuser
+    username: myuser
     password: mypassword
     restore: true
     mount: [ node_modules ]
@@ -16,7 +16,7 @@ pipeline:
 
   sftp_cache:
     server: 172.17.0.15:22
-    user: myuser
+    username: myuser
     password: mypassword
     restore: true
     mount: [ node_modules ]
