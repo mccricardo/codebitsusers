@@ -15,7 +15,6 @@ pipeline:
     image: ubuntu:14.04
     commands:
       - echo ${CI}
-      - pwd
       - cat node_modules/test.txt || echo "Does not exist"
       - mkdir -p node_modules
       - cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > node_modules/test.txt
