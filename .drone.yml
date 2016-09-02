@@ -1,7 +1,7 @@
 pipeline:
    # restore the cache from an sftp server
   sftp_cache:
-    server: sfpt-server
+    server: sfpt-server:22
     restore: true
     mount: [ node_modules ]
 
@@ -13,6 +13,6 @@ pipeline:
       - cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > node_modules/test.txt
 
   sftp_cache:
-    server: sfpt-server
+    server: sfpt-server:22
     restore: true
     mount: [ node_modules ]
