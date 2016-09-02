@@ -19,5 +19,5 @@ pipeline:
     server: 172.17.0.15:22
     username: myuser
     password: mypassword
-    restore: true
+    rebuild: true
     mount: [ node_modules ]
