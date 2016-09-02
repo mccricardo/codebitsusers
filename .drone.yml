@@ -1,3 +1,7 @@
+workspace:
+  path: /drone/src/github.com/mccricardo/codebitsusers
+  base: /drone
+
 pipeline:
    # restore the cache from an sftp server
   sftp_cache:
@@ -5,7 +9,7 @@ pipeline:
     username: myuser
     password: mypassword
     restore: true
-    mount: [ node_modules ]
+    mount: /done/node_modules
 
   build:
     image: ubuntu:14.04
@@ -22,4 +26,4 @@ pipeline:
     username: myuser
     password: mypassword
     rebuild: true
-    mount: [ node_modules ]
+    mount: /drone/node_modules
