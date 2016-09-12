@@ -4,12 +4,12 @@ workspace:
 
 pipeline:
    # restore the cache from an sftp server
-  sftp_cache:
-    server: 172.17.0.15:22
-    username: myuser
-    password: mypassword
-    restore: true
-    mount: [ node_modules, .git ]
+  #sftp_cache:
+  #  server: 172.17.0.15:22
+  #  username: myuser
+  #  password: mypassword
+  #  restore: true
+  #  mount: [ node_modules, .git ]
 
   build:
     image: ubuntu:14.04
@@ -21,10 +21,13 @@ pipeline:
       - mkdir -p node_modules
       - cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 > node_modules/test.txt
       - cat node_modules/test.txt
+  publish:
+    image: registry.uphold.internal/drone-ecr
+    privileged: true
 
-  sftp_cache:
-    server: 172.17.0.15:22
-    username: myuser
-    password: mypassword
-    rebuild: true
-    mount: [ node_modules, .git ]
+  #sftp_cache:
+  #  server: 172.17.0.15:22
+  #  username: myuser
+  #  password: mypassword
+  #  rebuild: true
+  #  mount: [ node_modules, .git ]
