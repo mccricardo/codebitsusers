@@ -4,10 +4,10 @@ workspace:
 
 pipeline:
    # restore the cache from an sftp server
-  sftp_cache:
-    image: plugins/sftp-cache
-    restore: true
-    mount: [ node_modules, .git ]
+  #sftp_cache:
+  #  image: plugins/sftp-cache
+  #  restore: true
+  #  mount: [ node_modules, .git ]
 
   build:
     image: ubuntu:14.04
