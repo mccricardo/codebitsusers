@@ -7,7 +7,7 @@ pipeline:
   sftp_cache:
     image: plugins/sftp-cache
     restore: true
-    mount: [ node_modules, .git ]
+    mount: [ /drone/docker, node_modules, .git ]
 
   build:
     image: ubuntu:14.04
@@ -27,5 +27,4 @@ pipeline:
   sftp_cache:
     image: plugins/sftp-cache
     rebuild: true
-    mount:
-      - node_modules
+    mount: [ /drone/docker, node_modules, .git ]
