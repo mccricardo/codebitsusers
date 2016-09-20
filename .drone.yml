@@ -1,7 +1,3 @@
-workspace:
-  path: /drone/src/github.com/mccricardo/codebitsusers
-  base: /drone
-
 pipeline:
    # restore the cache from an sftp server
   sftp_cache:
