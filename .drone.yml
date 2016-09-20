@@ -8,7 +8,6 @@ pipeline:
     image: plugins/sftp-cache
     restore: true
     mount:
-      - /drone/docker
       - node_modules
       - .git ]
 
@@ -31,6 +30,5 @@ pipeline:
     image: plugins/sftp-cache
     rebuild: true
     mount:
-      - /drone/docker
       - node_modules
       - .git ]
