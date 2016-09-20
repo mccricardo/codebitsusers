@@ -5,7 +5,7 @@ pipeline:
     restore: true
     mount:
       - node_modules
-      - .git ]
+      - .git
       - whatever
 
   build:
